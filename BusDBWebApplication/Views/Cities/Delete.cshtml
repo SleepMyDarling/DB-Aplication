@@ -1,0 +1,30 @@
+﻿@model BusDBWebApplication.DataBase.Cities
+
+@{
+    ViewBag.Title = "Удаление города";
+}
+
+
+<h3>Вы уверены, что хотите удалить этот город?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Название")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" />
+            @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

@@ -1,0 +1,47 @@
+﻿@model BusDBWebApplication.DataBase.Buses
+
+@{
+    ViewBag.Title = "Удалить автобус";
+}
+
+
+
+<h3>Вы уверены, что хотите удалить этот автобус?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер автобуса")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bus_id)
+        </dd>
+        <dt>
+            @Html.DisplayName("Марка")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.brand)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Количество мест")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.number_of_seats)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" />
+            @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

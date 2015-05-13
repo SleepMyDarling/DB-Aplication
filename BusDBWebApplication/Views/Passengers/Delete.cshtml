@@ -1,0 +1,63 @@
+﻿@model BusDBWebApplication.DataBase.Passengers
+
+@{
+    ViewBag.Title = "Удалить пассажира";
+}
+
+
+
+<h3>Вы уверены, что хотите удалить этого пассажира?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Фамилия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Имя")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Отчество")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Серия паспорта")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passport_series)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Номер паспорта")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passport_number)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" />
+            @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

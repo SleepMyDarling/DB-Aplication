@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BusDBWebApplication.DataBase.Cities>
+
+@{
+    ViewBag.Title = "Города";
+}
+
+<p>
+    @Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            Название
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.city_id }, new { @class = "btn btn-default" }) 
+                @Html.ActionLink("Подробнее", "Details", new { id = item.city_id }, new { @class = "btn btn-default" }) 
+                @Html.ActionLink("Удалить", "Delete", new { id = item.city_id }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    }
+
+</table>

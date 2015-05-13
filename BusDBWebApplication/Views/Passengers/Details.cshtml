@@ -1,0 +1,102 @@
+﻿@model BusDBWebApplication.DataBase.Passengers
+
+@{
+    ViewBag.Title = "Подробнее о пассажире";
+}
+
+
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Фамилия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Имя")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Отчество")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Серия паспорта")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passport_series)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Номер паспорта")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passport_number)
+        </dd>
+
+    </dl>
+</div>
+<hr/>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Дата покупки билета")
+            </th>
+            <th>
+                @Html.DisplayName("Откуда")
+            </th>
+            <th>
+                @Html.DisplayName("Куда")
+            </th>
+            <th>
+                @Html.DisplayName("Время отправления")
+            </th>
+            <th>
+                @Html.DisplayName("Время прибытия")
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Tickets)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.purchase_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Services.Routes.FromWhence.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Services.Routes.WhereAbouts.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Services.departure_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Services.arrival_time)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.passenger_id }, new { @class = "btn btn-default"})
+    @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
+</p>

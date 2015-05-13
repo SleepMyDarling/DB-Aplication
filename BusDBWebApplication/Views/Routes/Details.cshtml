@@ -1,0 +1,67 @@
+﻿@model BusDBWebApplication.DataBase.Routes
+
+@{
+    ViewBag.Title = "Подробнее о маршруте";
+}
+
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Откуда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromWhence.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Куда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WhereAbouts.title)
+        </dd>
+
+    </dl>
+</div>
+<hr/>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Номер рейса")
+            </th>
+            <th>
+                @Html.DisplayName("Время отправления из "+ Model.FromWhence.title)
+            </th>
+            <th>
+                @Html.DisplayName("Время прибытия в " + Model.WhereAbouts.title)
+            </th>
+            
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Services)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.service_number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.departure_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.arrival_time)
+                </td>
+                
+            </tr>
+        }
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
+</p>

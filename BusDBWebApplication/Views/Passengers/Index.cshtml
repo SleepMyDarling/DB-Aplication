@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BusDBWebApplication.DataBase.Passengers>
+
+@{
+    ViewBag.Title = "Пассажиры";
+}
+
+
+
+<p>
+    @Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Фамилия")
+        </th>
+        <th>
+            @Html.DisplayName("Имя")
+        </th>
+        <th>
+            @Html.DisplayName("Отчество")
+        </th>
+        <th>
+            @Html.DisplayName("Серия паспорта")
+        </th>
+        <th>
+            @Html.DisplayName("Номер паспорта")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patronymic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passport_series)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passport_number)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id = item.passenger_id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Подробнее", "Details", new { id = item.passenger_id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Удалить", "Delete", new { id = item.passenger_id }, new { @class = "btn btn-default" })
+        </td>
+    </tr>
+}
+
+</table>

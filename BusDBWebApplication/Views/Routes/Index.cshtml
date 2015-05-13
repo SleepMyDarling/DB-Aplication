@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BusDBWebApplication.DataBase.Routes>
+
+@{
+    ViewBag.Title = "Маршруты";
+}
+
+<p>
+    @Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Откуда")
+        </th>
+        <th>
+            @Html.DisplayName("Куда")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FromWhence.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WhereAbouts.title)
+        </td>
+        <td>
+            @Html.ActionLink("Подробнее", "Details", new { route_id = item.route_id, from = item.from, where = item.where }, new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Удалить", "Delete", new { route_id = item.route_id, from = item.from, where = item.where }, new { @class = "btn btn-default" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,38 @@
+﻿@model BusDBWebApplication.DataBase.Routes
+
+@{
+    ViewBag.Title = "Удалить маршрут";
+}
+
+
+<h3>Вы уверены, что хотите удалить этот маршрут?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Откуда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromWhence.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Куда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WhereAbouts.title)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" />
+            @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

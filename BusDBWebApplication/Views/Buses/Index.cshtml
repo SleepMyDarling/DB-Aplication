@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BusDBWebApplication.DataBase.Buses>
+
+@{
+    ViewBag.Title = "Автобусы";
+}
+
+
+
+<p>
+    @Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-primary"})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер автобуса")
+        </th>
+        <th>
+            @Html.DisplayName("Марка")
+        </th>
+        <th>
+            @Html.DisplayName("Количество мест")
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.bus_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.brand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.number_of_seats)
+        </td>
+        <td>
+            @Html.ActionLink("Подробнее", "Details", new { id = item.bus_id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Удалить", "Delete", new { id = item.bus_id }, new { @class = "btn btn-default" })
+        </td>
+    </tr>
+}
+
+</table>

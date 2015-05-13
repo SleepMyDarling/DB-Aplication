@@ -1,0 +1,521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Bus_StationModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Buses">
+          <Key>
+            <PropertyRef Name="bus_id" />
+          </Key>
+          <Property Name="bus_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brand" Type="varchar(max)" Nullable="false" />
+          <Property Name="number_of_seats" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Name="city_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Passengers">
+          <Key>
+            <PropertyRef Name="passenger_id" />
+          </Key>
+          <Property Name="passenger_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="surname" Type="varchar(max)" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" Nullable="false" />
+          <Property Name="patronymic" Type="varchar(max)" />
+          <Property Name="passport_series" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="passport_number" Type="varchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Routes">
+          <Key>
+            <PropertyRef Name="route_id" />
+            <PropertyRef Name="from" />
+            <PropertyRef Name="where" />
+          </Key>
+          <Property Name="route_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="from" Type="int" Nullable="false" />
+          <Property Name="where" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="service_id" />
+            <PropertyRef Name="route_id" />
+            <PropertyRef Name="from" />
+            <PropertyRef Name="where" />
+          </Key>
+          <Property Name="service_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="route_id" Type="int" Nullable="false" />
+          <Property Name="from" Type="int" Nullable="false" />
+          <Property Name="where" Type="int" Nullable="false" />
+          <Property Name="service_number" Type="int" Nullable="false" />
+          <Property Name="departure_time" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="arrival_time" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Services_Buses">
+          <Key>
+            <PropertyRef Name="service_id" />
+            <PropertyRef Name="route_id" />
+            <PropertyRef Name="from" />
+            <PropertyRef Name="where" />
+            <PropertyRef Name="bus_id" />
+          </Key>
+          <Property Name="service_id" Type="int" Nullable="false" />
+          <Property Name="route_id" Type="int" Nullable="false" />
+          <Property Name="from" Type="int" Nullable="false" />
+          <Property Name="where" Type="int" Nullable="false" />
+          <Property Name="bus_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="ticket_id" />
+            <PropertyRef Name="service_id" />
+            <PropertyRef Name="route_id" />
+            <PropertyRef Name="from" />
+            <PropertyRef Name="where" />
+            <PropertyRef Name="passenger_id" />
+          </Key>
+          <Property Name="ticket_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="service_id" Type="int" Nullable="false" />
+          <Property Name="route_id" Type="int" Nullable="false" />
+          <Property Name="from" Type="int" Nullable="false" />
+          <Property Name="where" Type="int" Nullable="false" />
+          <Property Name="passenger_id" Type="int" Nullable="false" />
+          <Property Name="purchase_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="Relationship10">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="Services_Buses" Type="Self.Services_Buses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="service_id" />
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Principal>
+            <Dependent Role="Services_Buses">
+              <PropertyRef Name="service_id" />
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship11">
+          <End Role="Buses" Type="Self.Buses" Multiplicity="1" />
+          <End Role="Services_Buses" Type="Self.Services_Buses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buses">
+              <PropertyRef Name="bus_id" />
+            </Principal>
+            <Dependent Role="Services_Buses">
+              <PropertyRef Name="bus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship3">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="1" />
+          <End Role="Services" Type="Self.Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Principal>
+            <Dependent Role="Services">
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship4">
+          <End Role="Passengers" Type="Self.Passengers" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passengers">
+              <PropertyRef Name="passenger_id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="passenger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship5">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="service_id" />
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="service_id" />
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship8">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="Routes">
+              <PropertyRef Name="from" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship9">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="Routes">
+              <PropertyRef Name="where" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Bus_StationModelContainer">
+          <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passengers" EntityType="Self.Passengers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Routes" EntityType="Self.Routes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services_Buses" EntityType="Self.Services_Buses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Relationship10" Association="Self.Relationship10">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Services_Buses" EntitySet="Services_Buses" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship11" Association="Self.Relationship11">
+            <End Role="Buses" EntitySet="Buses" />
+            <End Role="Services_Buses" EntitySet="Services_Buses" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship3" Association="Self.Relationship3">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship4" Association="Self.Relationship4">
+            <End Role="Passengers" EntitySet="Passengers" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship5" Association="Self.Relationship5">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship8" Association="Self.Relationship8">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Routes" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship9" Association="Self.Relationship9">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Routes" EntitySet="Routes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Bus_StationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Buses">
+          <Key>
+            <PropertyRef Name="bus_id" />
+          </Key>
+          <Property Name="bus_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="brand" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="number_of_seats" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Services" Relationship="Self.Services_Buses" FromRole="Buses" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Name="city_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Froms" Relationship="Self.Relationship8" FromRole="Cities" ToRole="Routes" />
+          <NavigationProperty Name="Wheres" Relationship="Self.Relationship9" FromRole="Cities" ToRole="Routes" />
+        </EntityType>
+        <EntityType Name="Passengers">
+          <Key>
+            <PropertyRef Name="passenger_id" />
+          </Key>
+          <Property Name="passenger_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="passport_series" Type="String" Nullable="false" />
+          <Property Name="passport_number" Type="String" Nullable="false" />
+          <NavigationProperty Name="Tickets" Relationship="Self.Relationship4" FromRole="Passengers" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="Routes">
+          <Key>
+            <PropertyRef Name="route_id" />
+            <PropertyRef Name="from" />
+            <PropertyRef Name="where" />
+          </Key>
+          <Property Name="route_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="from" Type="Int32" Nullable="false" />
+          <Property Name="where" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FromWhence" Relationship="Self.Relationship8" FromRole="Routes" ToRole="Cities" />
+          <NavigationProperty Name="WhereAbouts" Relationship="Self.Relationship9" FromRole="Routes" ToRole="Cities" />
+          <NavigationProperty Name="Services" Relationship="Self.Relationship3" FromRole="Routes" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="service_id" />
+            <PropertyRef Name="route_id" />
+            <PropertyRef Name="from" />
+            <PropertyRef Name="where" />
+          </Key>
+          <Property Name="service_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="route_id" Type="Int32" Nullable="false" />
+          <Property Name="from" Type="Int32" Nullable="false" />
+          <Property Name="where" Type="Int32" Nullable="false" />
+          <Property Name="service_number" Type="Int32" Nullable="false" />
+          <Property Name="departure_time" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="arrival_time" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Routes" Relationship="Self.Relationship3" FromRole="Services" ToRole="Routes" />
+          <NavigationProperty Name="Tickets" Relationship="Self.Relationship5" FromRole="Services" ToRole="Tickets" />
+          <NavigationProperty Name="Buses" Relationship="Self.Services_Buses" FromRole="Services" ToRole="Buses" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="ticket_id" />
+            <PropertyRef Name="service_id" />
+            <PropertyRef Name="route_id" />
+            <PropertyRef Name="from" />
+            <PropertyRef Name="where" />
+            <PropertyRef Name="passenger_id" />
+          </Key>
+          <Property Name="ticket_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service_id" Type="Int32" Nullable="false" />
+          <Property Name="route_id" Type="Int32" Nullable="false" />
+          <Property Name="from" Type="Int32" Nullable="false" />
+          <Property Name="where" Type="Int32" Nullable="false" />
+          <Property Name="passenger_id" Type="Int32" Nullable="false" />
+          <Property Name="purchase_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Passengers" Relationship="Self.Relationship4" FromRole="Tickets" ToRole="Passengers" />
+          <NavigationProperty Name="Services" Relationship="Self.Relationship5" FromRole="Tickets" ToRole="Services" />
+        </EntityType>
+        <Association Name="Relationship8">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="Routes">
+              <PropertyRef Name="from" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship9">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="Routes">
+              <PropertyRef Name="where" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship4">
+          <End Role="Passengers" Type="Self.Passengers" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passengers">
+              <PropertyRef Name="passenger_id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="passenger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship3">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="1" />
+          <End Role="Services" Type="Self.Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Principal>
+            <Dependent Role="Services">
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship5">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="service_id" />
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="service_id" />
+              <PropertyRef Name="route_id" />
+              <PropertyRef Name="from" />
+              <PropertyRef Name="where" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Services_Buses">
+          <End Role="Services" Type="Self.Services" Multiplicity="*" />
+          <End Role="Buses" Type="Self.Buses" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Bus_StationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Buses" EntityType="Self.Buses" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" />
+          <EntitySet Name="Passengers" EntityType="Self.Passengers" />
+          <EntitySet Name="Routes" EntityType="Self.Routes" />
+          <EntitySet Name="Services" EntityType="Self.Services" />
+          <EntitySet Name="Tickets" EntityType="Self.Tickets" />
+          <AssociationSet Name="Relationship8" Association="Self.Relationship8">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Routes" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship9" Association="Self.Relationship9">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Routes" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship4" Association="Self.Relationship4">
+            <End Role="Passengers" EntitySet="Passengers" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship3" Association="Self.Relationship3">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship5" Association="Self.Relationship5">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="Services_Buses" Association="Self.Services_Buses">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Buses" EntitySet="Buses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Bus_StationModelContainer" CdmEntityContainer="Bus_StationEntities">
+          <EntitySetMapping Name="Buses">
+            <EntityTypeMapping TypeName="Bus_StationModel.Buses">
+              <MappingFragment StoreEntitySet="Buses">
+                <ScalarProperty Name="bus_id" ColumnName="bus_id" />
+                <ScalarProperty Name="brand" ColumnName="brand" />
+                <ScalarProperty Name="number_of_seats" ColumnName="number_of_seats" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="Bus_StationModel.Cities">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passengers">
+            <EntityTypeMapping TypeName="Bus_StationModel.Passengers">
+              <MappingFragment StoreEntitySet="Passengers">
+                <ScalarProperty Name="passenger_id" ColumnName="passenger_id" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="passport_series" ColumnName="passport_series" />
+                <ScalarProperty Name="passport_number" ColumnName="passport_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="Bus_StationModel.Routes">
+              <MappingFragment StoreEntitySet="Routes">
+                <ScalarProperty Name="route_id" ColumnName="route_id" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="where" ColumnName="where" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="Bus_StationModel.Services">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="route_id" ColumnName="route_id" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="where" ColumnName="where" />
+                <ScalarProperty Name="service_number" ColumnName="service_number" />
+                <ScalarProperty Name="departure_time" ColumnName="departure_time" />
+                <ScalarProperty Name="arrival_time" ColumnName="arrival_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="Bus_StationModel.Tickets">
+              <MappingFragment StoreEntitySet="Tickets">
+                <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="route_id" ColumnName="route_id" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="where" ColumnName="where" />
+                <ScalarProperty Name="passenger_id" ColumnName="passenger_id" />
+                <ScalarProperty Name="purchase_date" ColumnName="purchase_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Services_Buses" TypeName="Bus_StationModel.Services_Buses" StoreEntitySet="Services_Buses">
+            <EndProperty Name="Services">
+              <ScalarProperty Name="service_id" ColumnName="service_id" />
+              <ScalarProperty Name="route_id" ColumnName="route_id" />
+              <ScalarProperty Name="from" ColumnName="from" />
+              <ScalarProperty Name="where" ColumnName="where" />
+            </EndProperty>
+            <EndProperty Name="Buses">
+              <ScalarProperty Name="bus_id" ColumnName="bus_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

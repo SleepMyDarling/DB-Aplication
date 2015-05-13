@@ -1,0 +1,42 @@
+﻿@model BusDBWebApplication.DataBase.Tickets
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tickets</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.purchase_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.purchase_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Passengers.surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Passengers.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Services.service_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Services.service_id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

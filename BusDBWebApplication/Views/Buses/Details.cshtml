@@ -1,0 +1,75 @@
+﻿@model BusDBWebApplication.DataBase.Buses
+
+@{
+    ViewBag.Title = "Подробнее об автобусе";
+}
+
+
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер автобуса")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bus_id)
+        </dd>
+        <dt>
+            @Html.DisplayName("Марка")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.brand)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Количество мест")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.number_of_seats)
+        </dd>
+
+    </dl>
+</div>
+<hr/>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Номер рейса")
+            </th>
+            <th>
+                @Html.DisplayName("Откуда")
+            </th>
+            <th>
+                @Html.DisplayName("Куда")
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Services)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.service_number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Routes.FromWhence.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Routes.WhereAbouts.title)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
+</p>
