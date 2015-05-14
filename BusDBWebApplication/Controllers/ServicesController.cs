@@ -56,6 +56,7 @@ namespace BusDBWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                FixServices(services);
                 db.Services.Add(services);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -64,6 +65,15 @@ namespace BusDBWebApplication.Controllers
             ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id", services.route_id);
 
             return View(services);
+        }
+
+        private void FixServices(Services services)
+        {
+            var route = db.Routes.First(x => x.route_id == services.route_id);
+            if(route!=null){
+                services.from = route.from;
+                services.where = route.where;
+            }
         }
 
         // GET: Services/Edit/5

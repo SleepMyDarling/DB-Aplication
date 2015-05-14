@@ -33,7 +33,7 @@ namespace BusDBWebApplication.DataBase
             }
             set
             {
-                Inicial = value;
+                
             }
         }
         
