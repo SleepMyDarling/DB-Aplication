@@ -24,9 +24,19 @@ namespace BusDBWebApplication.DataBase
         public string surname { get; set; }
         public string name { get; set; }
         public string patronymic { get; set; }
-        public string inicial { get { return String.Format("{0} {1} {2} паспорт: серия-{3} номер-{4}",surname,name, patronymic,passport_number,passport_series); } 
-            set { inicial = value; } 
-        } 
+        private string Inicial;
+        public string inicial
+        {
+            get
+            {
+                return String.Format("{0} {1} {2}. Паспортные данные: {3}-{4}",surname,name,patronymic,passport_series,passport_number);
+            }
+            set
+            {
+                Inicial = value;
+            }
+        }
+        
         [MaxLength(4)]
         [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите число")]
         public string passport_series { get; set; }

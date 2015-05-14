@@ -22,7 +22,6 @@ namespace BusDBWebApplication.DataBase
         public int route_id { get; set; }
         public int from { get; set; }
         public int where { get; set; }
-        public string way { get { return String.Format("{0}-{1}", FromWhence.title, WhereAbouts.title); } set { way = value; } }
     
         public virtual Cities FromWhence { get; set; }
         public virtual Cities WhereAbouts { get; set; }

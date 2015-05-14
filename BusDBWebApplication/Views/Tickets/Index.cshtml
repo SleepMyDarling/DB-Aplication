@@ -14,7 +14,7 @@
             @Html.DisplayName("Номер рейса")
         </th>
         <th>
-            @Html.DisplayName("Номер пассажира")
+            @Html.DisplayName("Пассажир")
         </th>
         <th>
             @Html.DisplayName("Дата приобретения")
@@ -28,7 +28,7 @@
             @Html.DisplayFor(modelItem => item.Services.service_number)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.passenger_id)
+            @Html.DisplayFor(modelItem => item.Passengers.inicial)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.purchase_date)

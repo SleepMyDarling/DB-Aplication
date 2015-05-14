@@ -254,8 +254,8 @@
           <Property Name="surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="patronymic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="passport_series" Type="String" Nullable="false" />
-          <Property Name="passport_number" Type="String" Nullable="false" />
+          <Property Name="passport_series" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="passport_number" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Tickets" Relationship="Self.Relationship4" FromRole="Passengers" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="Routes">
