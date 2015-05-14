@@ -26,13 +26,13 @@ namespace BusDBWebApplication.Controllers
         }
 
         // GET: Services/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int? service_id, int? route_id, int? from, int? where)
         {
-            if (id == null)
+            if (service_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Services services = await db.Services.FindAsync(id);
+            Services services = await db.Services.FindAsync(service_id, route_id, from, where);
             if (services == null)
             {
                 return HttpNotFound();
@@ -62,17 +62,18 @@ namespace BusDBWebApplication.Controllers
             }
 
             ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id", services.route_id);
+
             return View(services);
         }
 
         // GET: Services/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? service_id, int? route_id, int? from, int? where)
         {
-            if (id == null)
+            if (service_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Services services = await db.Services.FindAsync(id);
+            Services services = await db.Services.FindAsync(service_id, route_id , from, where);
             if (services == null)
             {
                 return HttpNotFound();
@@ -99,13 +100,13 @@ namespace BusDBWebApplication.Controllers
         }
 
         // GET: Services/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? service_id, int? route_id, int? from, int? where)
         {
-            if (id == null)
+            if (service_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Services services = await db.Services.FindAsync(id);
+            Services services = await db.Services.FindAsync(service_id, route_id, from, where);
             if (services == null)
             {
                 return HttpNotFound();
@@ -116,9 +117,9 @@ namespace BusDBWebApplication.Controllers
         // POST: Services/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int service_id, int route_id, int from, int where)
         {
-            Services services = await db.Services.FindAsync(id);
+            Services services = await db.Services.FindAsync(service_id, route_id, from, where);
             db.Services.Remove(services);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

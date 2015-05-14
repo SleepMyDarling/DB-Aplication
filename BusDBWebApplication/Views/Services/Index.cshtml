@@ -1,29 +1,26 @@
 ﻿@model IEnumerable<BusDBWebApplication.DataBase.Services>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Рейсы";
 }
 
-<h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.service_number)
+            @Html.DisplayName("Номер рейса")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.departure_time)
+            @Html.DisplayName("Маршрут")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.arrival_time)
+            @Html.DisplayName("Время отправления")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Routes.route_id)
+            @Html.DisplayName("Время прибытия")
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -32,18 +29,18 @@
             @Html.DisplayFor(modelItem => item.service_number)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Routes.FromWhence.title) -@Html.DisplayFor(modelItem => item.Routes.WhereAbouts.title)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.departure_time)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.arrival_time)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Routes.route_id)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Изменить", "Edit", new { service_id = item.service_id, route_id = item.Routes.route_id, from = item.Routes.from, where = item.Routes.where }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Подробнее", "Details", new { service_id = item.service_id, route_id = item.Routes.route_id, from = item.Routes.from, where = item.Routes.where }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Удалить", "Delete", new { service_id = item.service_id, route_id = item.Routes.route_id, from = item.Routes.from, where = item.Routes.where }, new { @class = "btn btn-default" })
         </td>
     </tr>
 }

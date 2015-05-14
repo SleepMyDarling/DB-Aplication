@@ -1,17 +1,16 @@
 ﻿@model BusDBWebApplication.DataBase.Services
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Подробнее о рейсе";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <h4>Services</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.service_number)
+            @Html.DisplayName("Номер рейса")
         </dt>
 
         <dd>
@@ -19,7 +18,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.departure_time)
+            @Html.DisplayName("Маршрут")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Routes.FromWhence.title) - @Html.DisplayFor(model => model.Routes.WhereAbouts.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Время отправления")
         </dt>
 
         <dd>
@@ -27,24 +34,42 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.arrival_time)
+            @Html.DisplayName("Время прибытия")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.arrival_time)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Routes.route_id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Routes.route_id)
         </dd>
 
     </dl>
 </div>
+<hr/>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Марка")
+            </th>
+            <th>
+                @Html.DisplayName("Количество мест")
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.Buses) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.number_of_seats)
+                </td>
+            </tr>
+            }
+        </table>
+    </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Изменить", "Edit", new { service_id = Model.service_id, route_id = Model.Routes.route_id, from = Model.Routes.from, where = Model.Routes.where }, new {@class = "btn btn-default" }) 
+    @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
 </p>
