@@ -1,38 +1,37 @@
 ﻿@model BusDBWebApplication.DataBase.Tickets
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Удалить билет";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+
+<h3>Вы уверены, что вы хотите удалить этот билет?</h3>
 <div>
-    <h4>Tickets</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.purchase_date)
+            @Html.DisplayName("Номер рейса")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Services.service_number)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Паспортные данные")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Passengers.passport_series)-@Html.DisplayFor(model => model.Passengers.passport_number)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата приобретения")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.purchase_date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Passengers.surname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Passengers.surname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Services.service_id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Services.service_id)
         </dd>
 
     </dl>
@@ -41,8 +40,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
         </div>
     }
 </div>

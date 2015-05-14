@@ -43,7 +43,7 @@ namespace BusDBWebApplication.Controllers
         // GET: Services/Create
         public ActionResult Create()
         {
-            ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id");
+            ViewBag.route_id = new SelectList(db.Routes, "route_id", "way");
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace BusDBWebApplication.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id", services.route_id);
+            ViewBag.route_id = new SelectList(db.Routes, "route_id", "way", services.route_id);
 
             return View(services);
         }
@@ -78,7 +78,7 @@ namespace BusDBWebApplication.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id", services.route_id);
+            ViewBag.route_id = new SelectList(db.Routes, "route_id", "way", services.route_id);
             return View(services);
         }
 
@@ -95,7 +95,7 @@ namespace BusDBWebApplication.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id", services.route_id);
+            ViewBag.route_id = new SelectList(db.Routes, "route_id", "way", services.route_id);
             return View(services);
         }
 

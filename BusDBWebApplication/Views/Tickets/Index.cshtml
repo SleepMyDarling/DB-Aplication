@@ -1,24 +1,23 @@
 ﻿@model IEnumerable<BusDBWebApplication.DataBase.Tickets>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Билеты";
 }
 
-<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create", null, new {@class="btn btn-primary" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.purchase_date)
+            @Html.DisplayName("Номер рейса")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Passengers.surname)
+            @Html.DisplayName("Номер пассажира")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Services.service_id)
+            @Html.DisplayName("Дата приобретения")
         </th>
         <th></th>
     </tr>
@@ -26,19 +25,17 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Services.service_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passenger_id)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.purchase_date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Passengers.surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Services.service_id)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
+            @Html.ActionLink("Подробнее", "Details", new { ticket_id = item.ticket_id, service_id = item.service_id, route_id = item.Services.route_id, from = item.Services.from, where = item.Services.where, passenger_id = item.passenger_id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Удалить", "Delete", new { ticket_id = item.ticket_id, service_id = item.service_id, route_id = item.Services.route_id, from = item.Services.from, where = item.Services.where, passenger_id = item.passenger_id }, new { @class = "btn btn-default" })</td>
     </tr>
 }
 

@@ -26,13 +26,13 @@ namespace BusDBWebApplication.Controllers
         }
 
         // GET: Tickets/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int? ticket_id, int? service_id, int? route_id, int? from, int? where, int? passenger_id)
         {
-            if (id == null)
+            if (ticket_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tickets tickets = await db.Tickets.FindAsync(id);
+            Tickets tickets = await db.Tickets.FindAsync(ticket_id, service_id, route_id, from, where, passenger_id);
             if (tickets == null)
             {
                 return HttpNotFound();
@@ -43,8 +43,8 @@ namespace BusDBWebApplication.Controllers
         // GET: Tickets/Create
         public ActionResult Create()
         {
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "surname");
-            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_id");
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial");
+            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number");
             return View();
         }
 
@@ -62,25 +62,25 @@ namespace BusDBWebApplication.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "surname", tickets.passenger_id);
-            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_id", tickets.service_id);
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial", tickets.passenger_id);
+            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number", tickets.service_id);
             return View(tickets);
         }
 
         // GET: Tickets/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? ticket_id, int? service_id, int? route_id, int? from, int? where, int? passenger_id)
         {
-            if (id == null)
+            if (ticket_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tickets tickets = await db.Tickets.FindAsync(id);
+            Tickets tickets = await db.Tickets.FindAsync(ticket_id, service_id, route_id, from, where, passenger_id);
             if (tickets == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "surname", tickets.passenger_id);
-            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_id", tickets.service_id);
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial", tickets.passenger_id);
+            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number", tickets.service_id);
             return View(tickets);
         }
 
@@ -97,19 +97,19 @@ namespace BusDBWebApplication.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "surname", tickets.passenger_id);
-            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_id", tickets.service_id);
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial", tickets.passenger_id);
+            ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number", tickets.service_id);
             return View(tickets);
         }
 
         // GET: Tickets/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? ticket_id, int? service_id, int? route_id, int? from, int? where, int? passenger_id)
         {
-            if (id == null)
+            if (ticket_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tickets tickets = await db.Tickets.FindAsync(id);
+            Tickets tickets = await db.Tickets.FindAsync(ticket_id, service_id, route_id,from, where, passenger_id);
             if (tickets == null)
             {
                 return HttpNotFound();
@@ -120,9 +120,9 @@ namespace BusDBWebApplication.Controllers
         // POST: Tickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int ticket_id, int service_id, int route_id, int from, int where, int passenger_id)
         {
-            Tickets tickets = await db.Tickets.FindAsync(id);
+            Tickets tickets = await db.Tickets.FindAsync( ticket_id,  service_id, route_id, from, where, passenger_id);
             db.Tickets.Remove(tickets);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
