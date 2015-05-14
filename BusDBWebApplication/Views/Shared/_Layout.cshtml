@@ -100,5 +100,11 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(function(){            $('#datepicker').datepicker({                inline: true,                nextText: '&rarr;',                prevText: '&larr;',                showOtherMonths: true,                dateFormat: 'dd MM yy',                dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],                            });        });	
+    
+    </script>
 </body>
+
 </html>
+
