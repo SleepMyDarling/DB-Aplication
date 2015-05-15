@@ -26,11 +26,9 @@ using System.ComponentModel.DataAnnotations;
         public int from { get; set; }
         public int where { get; set; }
         public int service_number { get; set; }
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        
         public System.DateTime departure_time { get; set; }
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        
         public System.DateTime arrival_time { get; set; }
     
         public virtual Routes Routes { get; set; }

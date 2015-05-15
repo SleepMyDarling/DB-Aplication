@@ -24,8 +24,7 @@ namespace BusDBWebApplication.DataBase
         public string surname { get; set; }
         public string name { get; set; }
         public string patronymic { get; set; }
-        private string Inicial;
-        public string inicial
+        public string information
         {
             get
             {

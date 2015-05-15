@@ -43,7 +43,7 @@ namespace BusDBWebApplication.Controllers
         // GET: Tickets/Create
         public ActionResult Create()
         {
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial");
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "information");
             ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number");
             return View();
         }
@@ -63,7 +63,7 @@ namespace BusDBWebApplication.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial", tickets.passenger_id);
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "information", tickets.passenger_id);
             ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number", tickets.service_id);
             return View(tickets);
         }
@@ -90,7 +90,7 @@ namespace BusDBWebApplication.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial", tickets.passenger_id);
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "information", tickets.passenger_id);
             ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number", tickets.service_id);
             return View(tickets);
         }
@@ -108,7 +108,7 @@ namespace BusDBWebApplication.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "inicial", tickets.passenger_id);
+            ViewBag.passenger_id = new SelectList(db.Passengers, "passenger_id", "information", tickets.passenger_id);
             ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number", tickets.service_id);
             return View(tickets);
         }

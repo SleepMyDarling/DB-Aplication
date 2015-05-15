@@ -10,7 +10,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.purchase_date)
+            @Html.DisplayName("Дата приобретения")
         </dt>
 
         <dd>
@@ -18,22 +18,99 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Passengers.surname)
+            @Html.DisplayName("Пассажир")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Passengers.surname)
+            @Html.DisplayFor(model => model.Passengers.information)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Services.service_id)
+            @Html.DisplayName("Номер рейса")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Services.service_id)
+            @Html.DisplayFor(model => model.Services.service_number)
         </dd>
 
     </dl>
+</div>
+<hr/>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Номер рейса")
+            </th>
+            <th>
+                @Html.DisplayName("Маршрут")
+            </th>
+            <th>
+                @Html.DisplayName("Время отправления")
+            </th>
+            <th>
+                @Html.DisplayName("Время прибытия")
+            </th>
+        </tr>     
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Services.service_number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Services.Routes.FromWhence.title) -@Html.DisplayFor(modelItem => modelItem.Services.Routes.WhereAbouts.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Services.departure_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Services.arrival_time)
+                </td>
+        </table>
+    </div>
+<hr/>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Фамилия")
+            </th>
+            <th>
+                @Html.DisplayName("Имя")
+            </th>
+            <th>
+                @Html.DisplayName("Отчество")
+            </th>
+            <th>
+                @Html.DisplayName("Серия паспорта")
+            </th>
+            <th>
+                @Html.DisplayName("Номер паспорта")
+            </th>
+            <th></th>
+        </tr>
+
+       
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Passengers.surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Passengers.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Passengers.patronymic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Passengers.passport_series)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Passengers.passport_number)
+                </td>
+                
+            </tr>
+        
+
+    </table>
 </div>
 <p>
     @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-primary" })
