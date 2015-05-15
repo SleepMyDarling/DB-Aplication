@@ -57,7 +57,7 @@ namespace BusDBWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                FixTickets(tickets);
+                
                 db.Tickets.Add(tickets);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -67,16 +67,7 @@ namespace BusDBWebApplication.Controllers
             ViewBag.service_id = new SelectList(db.Services, "service_id", "service_number", tickets.service_id);
             return View(tickets);
         }
-        private void FixTickets(Tickets tickets)
-        {
-            var service = db.Services.First(x => x.service_id == tickets.service_id);
-            if (service != null)
-            {
-                tickets.route_id = service.route_id;
-                tickets.from = service.from;
-                tickets.where = service.where;
-            }
-        }
+        
 
         // GET: Tickets/Edit/5
         public async Task<ActionResult> Edit(int? ticket_id, int? service_id, int? route_id, int? from, int? where, int? passenger_id)

@@ -43,6 +43,7 @@ namespace BusDBWebApplication.Controllers
         // GET: Services/Create
         public ActionResult Create()
         {
+
             ViewBag.route_id = new SelectList(db.Routes, "route_id", "route");
             return View();
         }
@@ -56,7 +57,7 @@ namespace BusDBWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                FixServices(services);
+                //FixServices(services);
                 db.Services.Add(services);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

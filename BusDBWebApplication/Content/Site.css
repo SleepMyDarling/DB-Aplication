@@ -85,8 +85,8 @@ footer {
 }
 /* Date Picker Header */
 .ui-datepicker-header {
-	background: url('../img/dark_leather.png') repeat 0 0 #000;
-	color: #e0e0e0;
+	background: url('../img/grow_leather.png') repeat 0 0 #000;
+	color: #000;
 	font-weight: bold;
 	-webkit-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, 2);
 	-moz-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
@@ -109,6 +109,7 @@ footer {
 	float: right;
 }
 .ui-datepicker-prev, .ui-datepicker-next {
+    color:#f50f0f;
 	display: inline-block;
 	width: 30px;
 	height: 30px;
