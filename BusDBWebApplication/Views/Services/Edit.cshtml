@@ -1,4 +1,5 @@
-﻿@model BusDBWebApplication.DataBase.Services
+﻿@model BusDBWebApplication.Models.ServiceEditViewModel
+
 
 @{
     ViewBag.Title = "Изменить рейс";
@@ -15,43 +16,65 @@
         
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.service_id)
-        @Html.HiddenFor(model=>model.route_id)
+        @Html.HiddenFor(model => model.Service.service_id)
+        @Html.HiddenFor(model => model.Service.route_id)
 
-        @Html.HiddenFor(model => model.from)
+        @Html.HiddenFor(model => model.Service.from)
 
-        @Html.HiddenFor(model => model.where)
+        @Html.HiddenFor(model => model.Service.where)
 
 
         <div class="form-group">
             @Html.Label("Номер рейса", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.service_number, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.service_number, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Service.service_number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Service.service_number, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.Label("Время отправления", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.departure_time, new { htmlAttributes = new { @class = "form-control datepicker" } })
-                @Html.ValidationMessageFor(model => model.departure_time, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Service.departure_time, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.Service.departure_time, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.Label("Время прибытия", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.arrival_time, new { htmlAttributes = new { @class = "form-control datepicker" } })
-                @Html.ValidationMessageFor(model => model.arrival_time, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Service.arrival_time, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.Service.arrival_time, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.Label("Назначить автобус", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("bus_id", null, htmlAttributes : new { @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.arrival_time, "", new { @class = "text-danger" })
-            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Выбор</th>
+                        <th>Автобус</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var bus in Model.Buses)
+                    {
+                        <tr>
+                            <td class="col-md-6">
+                                @Html.EditorFor(m => bus.IsSelected, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.HiddenFor(model => bus.bus_id)
+                            </td>
+                            <td class="col-md-6">
+                                @Html.DisplayFor(m => bus.GenerializedInfo, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                            <td class="col-md-2">
+                                @Html.ValidationMessageFor(m => bus, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
 
         <div class="form-group">

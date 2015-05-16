@@ -35,10 +35,11 @@ namespace BusDBWebApplication.DataBase
                 
             }
         }
-        
+        [MinLength(4)]
         [MaxLength(4)]
         [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите число")]
         public string passport_series { get; set; }
+        [MinLength(6)]
         [MaxLength(6)]
         [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите число")]
         public string passport_number { get; set; }

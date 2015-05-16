@@ -22,7 +22,15 @@ namespace BusDBWebApplication.DataBase
         public int bus_id { get; set; }
         public string brand { get; set; }
         public int number_of_seats { get; set; }
-    
+
+        public bool IsSelected { get; set; }
+        public string GenerializedInfo
+        {
+            get
+            {
+                return string.Format("{0} {1}", bus_id, brand);
+            }
+        }
         public virtual ICollection<Services> Services { get; set; }
     }
 }
