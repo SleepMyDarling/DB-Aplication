@@ -32,7 +32,7 @@
         <div class="form-group">
             @Html.Label("Дата приобретения", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" id="datecontainer">
-                @Html.EditorFor(model => model.purchase_date, new { htmlAttributes = new { @class = "form-control datepicker", @placeholder = "dd/MM/yyyy hh:mm:ss"} })
+                @Html.EditorFor(model => model.purchase_date, new { htmlAttributes = new { @class = "form-control datepicker", @placeholder = "dd.mm.yyyy hh:mm:ss"} })
                 @Html.ValidationMessageFor(model => model.purchase_date, "", new { @class = "text-danger" })
             </div>
         </div>

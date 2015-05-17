@@ -23,7 +23,6 @@ namespace BusDBWebApplication.DataBase
         public string brand { get; set; }
         public int number_of_seats { get; set; }
 
-        public bool IsSelected { get; set; }
         public string GenerializedInfo
         {
             get

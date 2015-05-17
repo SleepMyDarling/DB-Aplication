@@ -212,7 +212,6 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BusSelectViewModel.cs" />
-    <Compile Include="Models\ModelStateTempDataTransfer.cs" />
     <Compile Include="Models\ServiceCreateViewModel.cs" />
     <Compile Include="Models\ServiceEditViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />

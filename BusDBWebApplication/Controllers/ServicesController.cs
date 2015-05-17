@@ -66,16 +66,15 @@ namespace BusDBWebApplication.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ServiceCreateViewModel services, [Bind(Include = "route_id")] Tickets tickets)
+        public async Task<ActionResult> Create([Bind(Include = "route_id,service_number,departure_time,arrival_time,Buses")]ServiceCreateViewModel services)
         {
             if (ModelState.IsValid)
             
             {
-                var route = db.Routes.First(x => x.route_id == tickets.route_id);
-                
+                var route = db.Routes.First(x=>x.route_id == services.route_id);
                 Services service = new Services
                 {
-                    route_id = tickets.route_id,
+                    route_id = services.route_id,
                     from = route.from,
                     where = route.where,
                     service_number = services.service_number,
@@ -152,21 +151,20 @@ namespace BusDBWebApplication.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
-        public async Task<ActionResult> Edit(ServiceEditViewModel services)
+
+        public async Task<ActionResult> Edit([Bind(Include = "service_id,service_number,departure_time,arrival_time,Buses")]ServiceEditViewModel services)
         {
 
             if (ModelState.IsValid)
             {
-                var service = db.Services.Include(s => s.Buses)
-                    .SingleOrDefault(s => s.service_id == services.service_id);
+                var service = db.Services.Include(s=>s.Buses).SingleOrDefault(s => s.service_id == services.service_id);
 
                 if (service != null)
                 {
                     // Update scalar properties like "Amount"
                     service.service_number = services.service_number;
                     service.departure_time = services.departure_time;
-                    service.arrival_time = service.arrival_time;
+                    service.arrival_time = services.arrival_time;
                     // or more generic for multiple scalar properties
                     // _context.Entry(subscription).CurrentValues.SetValues(viewModel);
                     // But this will work only if you use the same key property name
@@ -186,15 +184,15 @@ namespace BusDBWebApplication.Controllers
                                 service.Buses.Add(addedBus);
                             }
                         }
-                        //else
-                        //{
-                        //    var removedBus = service.Buses
-                        //       .SingleOrDefault(c => c.bus_id == bus.bus_id);
-                        //    if (removedBus != null)
-                        //        // if company is not selected but currently
-                        //        // related in DB, remove relationship
-                        //        service.Buses.Remove(removedBus);
-                        //}
+                        else
+                        {
+                            var removedBus = service.Buses
+                               .SingleOrDefault(c => c.bus_id == bus.bus_id);
+                            if (removedBus != null)
+                                // if company is not selected but currently
+                                // related in DB, remove relationship
+                                service.Buses.Remove(removedBus);
+                        }
                     }
 
                 }

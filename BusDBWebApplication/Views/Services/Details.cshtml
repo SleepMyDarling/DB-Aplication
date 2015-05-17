@@ -49,6 +49,9 @@
     <table class="table">
         <tr>
             <th>
+                @Html.DisplayName("Номер автобуса")
+            </th>
+            <th>
                 @Html.DisplayName("Марка")
             </th>
             <th>
@@ -59,6 +62,9 @@
 
         @foreach (var item in Model.Buses) {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bus_id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.brand)
                 </td>
