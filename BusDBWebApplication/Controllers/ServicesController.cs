@@ -44,9 +44,21 @@ namespace BusDBWebApplication.Controllers
         // GET: Services/Create
         public ActionResult Create()
         {
-
+            
+            var service = new ServiceCreateViewModel
+            {
+                Buses = db.Buses
+                    .Select(c => new BusSelectViewModel
+                    {
+                        bus_id = c.bus_id,
+                        brand = c.brand,
+                        number_of_seats = c.number_of_seats,
+                        IsSelected = false
+                    })
+                    .ToList()
+            };
             ViewBag.route_id = new SelectList(db.Routes, "route_id", "route");
-            return View();
+            return View(service);
         }
 
         // POST: Services/Create
@@ -54,63 +66,85 @@ namespace BusDBWebApplication.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "service_id,route_id,from,where,service_number,departure_time,arrival_time")] Services services)
+        public async Task<ActionResult> Create(ServiceCreateViewModel services, [Bind(Include = "route_id")] Tickets tickets)
         {
             if (ModelState.IsValid)
+            
             {
-                //FixServices(services);
-                db.Services.Add(services);
+                var route = db.Routes.First(x => x.route_id == tickets.route_id);
+                
+                Services service = new Services
+                {
+                    route_id = tickets.route_id,
+                    from = route.from,
+                    where = route.where,
+                    service_number = services.service_number,
+                    departure_time = services.departure_time,
+                    arrival_time = services.arrival_time,
+                    Buses = new List<Buses>()
+                };
+
+                foreach (var selectedBus
+                    in services.Buses.Where(c => c.IsSelected))
+                {
+                    Buses bus = new Buses { bus_id = selectedBus.bus_id };
+                    db.Buses.Attach(bus);
+
+                    service.Buses.Add(bus);
+                }
+
+                db.Services.Add(service);
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
-
             ViewBag.route_id = new SelectList(db.Routes, "route_id", "route", services.route_id);
-
             return View(services);
         }
 
-        private void FixServices(Services services)
-        {
-            var route = db.Routes.First(x => x.route_id == services.route_id);
-            if(route!=null){
-                services.from = route.from;
-                services.where = route.where;
-            }
-        }
+       
 
         // GET: Services/Edit/5
-        [ImportModelStateFromTempData]
-        public async Task<ActionResult> Edit(int? service_id, int? route_id, int? from, int? where)
+        
+        public async Task<ActionResult> Edit(int service_id)
         {
-            if (service_id == null)
+            var data = db.Services
+        .Where(s => s.service_id == service_id)
+        .Select(s => new
+        {
+            ViewModel = new ServiceEditViewModel
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Services services = await db.Services.FindAsync(service_id, route_id, from, where);
-            if (services == null)
-            {
-                return HttpNotFound();
-            }
+                service_id = s.service_id,
+                route_id = s.route_id,
+                from = s.from,
+                where = s.where,
+                service_number = s.service_number,
+                departure_time = s.departure_time,
+                arrival_time = s.arrival_time
+            },
+            Buses = s.Buses.Select(c => c.bus_id)
+        })
+        .SingleOrDefault();
 
-            ICollection<Buses> selectedBuses = new List<Buses>();
-            foreach(var bus in db.Buses)
-            {
-                
-                if(services.Buses.FirstOrDefault(x=>x.bus_id == bus.bus_id) != null)
-                {
-                    bus.IsSelected = true;
-                }
-                selectedBuses.Add(bus);
-                    
-            }
+    if (data == null)
+        return HttpNotFound();
 
-            ServiceEditViewModel model = new ServiceEditViewModel()
-            {
-                Service = services,
-                Buses = selectedBuses.ToList()
-            };
-            ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id", services.route_id);
-            return View(model);
+    // Load all companies from the DB
+    data.ViewModel.Buses = db.Buses
+        .Select(c => new BusSelectViewModel
+        {
+            bus_id = c.bus_id,
+            brand = c.brand,
+            number_of_seats = c.number_of_seats
+        })
+        .ToList();
+
+    // Set IsSelected flag: true (= checkbox checked) if the company
+    // is already related with the subscription; false, if not
+    foreach (var c in data.ViewModel.Buses)
+        c.IsSelected = data.Buses.Contains(c.bus_id);
+
+    return View(data.ViewModel);
         }
 
         // POST: Services/Edit/5
@@ -118,22 +152,57 @@ namespace BusDBWebApplication.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ExportModelStateToTempData]
+        
         public async Task<ActionResult> Edit(ServiceEditViewModel services)
         {
 
             if (ModelState.IsValid)
             {
-                var selectedBuses = services.Buses.Where(x => x.IsSelected);
-                
-                if(selectedBuses != null)
-                    services.Service.Buses = selectedBuses.ToList();
+                var service = db.Services.Include(s => s.Buses)
+                    .SingleOrDefault(s => s.service_id == services.service_id);
 
-                db.Entry(services.Service).State = EntityState.Modified;
+                if (service != null)
+                {
+                    // Update scalar properties like "Amount"
+                    service.service_number = services.service_number;
+                    service.departure_time = services.departure_time;
+                    service.arrival_time = service.arrival_time;
+                    // or more generic for multiple scalar properties
+                    // _context.Entry(subscription).CurrentValues.SetValues(viewModel);
+                    // But this will work only if you use the same key property name
+                    // in ViewModel and entity
+
+                    foreach (var bus in services.Buses)
+                    {
+                        if (bus.IsSelected)
+                        {
+                            if (!service.Buses.Any(
+                                c => c.bus_id == bus.bus_id))
+                            {
+                                // if company is selected but not yet
+                                // related in DB, add relationship
+                                var addedBus = new Buses { bus_id = bus.bus_id };
+                                db.Buses.Attach(addedBus);
+                                service.Buses.Add(addedBus);
+                            }
+                        }
+                        //else
+                        //{
+                        //    var removedBus = service.Buses
+                        //       .SingleOrDefault(c => c.bus_id == bus.bus_id);
+                        //    if (removedBus != null)
+                        //        // if company is not selected but currently
+                        //        // related in DB, remove relationship
+                        //        service.Buses.Remove(removedBus);
+                        //}
+                    }
+
+                }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.route_id = new SelectList(db.Routes, "route_id", "route_id", services.Service.route_id);
+            
+
             return View(services);
         }
 

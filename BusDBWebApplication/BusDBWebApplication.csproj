@@ -211,7 +211,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BusSelectViewModel.cs" />
     <Compile Include="Models\ModelStateTempDataTransfer.cs" />
+    <Compile Include="Models\ServiceCreateViewModel.cs" />
     <Compile Include="Models\ServiceEditViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -361,6 +363,7 @@
     <Content Include="Views\Tickets\Details.cshtml" />
     <Content Include="Views\Tickets\Index.cshtml" />
     <Content Include="Views\Shared\Main.cshtml" />
+    <Content Include="Views\Services\EditorTemplates\BusSelectViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
