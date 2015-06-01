@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – приложение ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="~/" class="navbar-brand"><img class="nav-img" height="60" src="~/Content/Images/bus.png" /></a>
+                <a href="~/" class="navbar-brand">База данных </a>             
+            </div>
+            <div class="navbar-collapse collapse">
+                
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <!-- Main -->
+        <div class="container-fluid">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <h4>@ViewBag.Title </h4>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                       
+                    <!--/row-->
+
+                    
+
+
+                
+                <!--/col-span-9-->
+            </div>
+        </div>
+        <!-- /Main -->
+
+        
+        <hr />
+        <footer>
+            <p>Mikhail-Soft &copy;@DateTime.Now.Year</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+    $(function(){
+        $('.datepicker').datepicker({
+            inline: true,
+            nextText: '&rarr;',
+            prevText: '&larr;',
+            showOtherMonths: true,
+            dateFormat: 'dd MM yy ',
+            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            changeMonth: true,
+            changeYear: true,
+            defaultDate: (+0),
+            });
+            $('.datepicker1').datepicker({
+                inline: true,
+                nextText: '&rarr;',
+                prevText: '&larr;',
+                showOtherMonths: true,
+                dateFormat: 'dd MM yy ',
+                dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                changeMonth: true,
+                changeYear: true,
+                defaultDate: (+0),
+                minDate: -0,
+                maxDate: +40,
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
+

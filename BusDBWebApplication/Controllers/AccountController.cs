@@ -139,7 +139,7 @@ namespace BusDBWebApplication.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        
         public ActionResult Register()
         {
             return View();
@@ -148,7 +148,7 @@ namespace BusDBWebApplication.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+       
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -395,7 +395,7 @@ namespace BusDBWebApplication.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Search", "Sale");
         }
 
         //
@@ -432,7 +432,7 @@ namespace BusDBWebApplication.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

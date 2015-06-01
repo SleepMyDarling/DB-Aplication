@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<BusDBWebApplication.DataBase.Services>
+
+@{
+    ViewBag.Title = "Рейсы";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер рейса")
+        </th>
+        <th>
+            @Html.DisplayName("Маршрут")
+        </th>
+        <th>
+            @Html.DisplayName("Время отправления")
+        </th>
+        <th>
+            @Html.DisplayName("Время прибытия")
+        </th>
+        <th>
+            @Html.DisplayName("Количество свободных мест")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.service_number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Routes.FromWhence.title)-@Html.DisplayFor(modelItem => item.Routes.WhereAbouts.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.departure_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.arrival_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.number_of_free_seats)
+            </td>
+            <td>
+                @if (item.number_of_free_seats > 0) 
+                {
+                    @Html.ActionLink("Выбрать", "Passenger", new { service_id = item.service_id }, new { @class = "btn btn-default" }) 
+                }
+                else
+                {
+                    <b style="color:red">Нет в наличии!</b>
+                }  
+            </td>
+        </tr>
+    }
+
+</table>
+

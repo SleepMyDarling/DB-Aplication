@@ -25,10 +25,22 @@ using System.ComponentModel.DataAnnotations;
         public int route_id { get; set; }
         public int from { get; set; }
         public int where { get; set; }
+        public int number_of_free_seats
+        {
+            get
+            {
+                int allSeats = 0;
+                foreach (Buses bus in Buses)
+                {
+                    allSeats += bus.number_of_seats;
+                }
+                return allSeats - Tickets.Count;
+            }
+        }
         public int service_number { get; set; }
-        
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public System.DateTime departure_time { get; set; }
-        
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public System.DateTime arrival_time { get; set; }
     
         public virtual Routes Routes { get; set; }

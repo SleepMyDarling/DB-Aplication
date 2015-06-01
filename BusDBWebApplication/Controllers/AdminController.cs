@@ -8,8 +8,10 @@ namespace BusDBWebApplication.Controllers
 {
     [RequireHttps]
     [Authorize]
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
+    
+        // GET: Admin
         public ActionResult Index()
         {
             return View();

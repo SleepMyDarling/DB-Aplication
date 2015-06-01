@@ -13,9 +13,9 @@ namespace BusDBWebApplication.Models
         //public int from;
         //public int where;
         public int service_number { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime departure_time { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime arrival_time { get; set; }
         public IEnumerable<BusSelectViewModel> Buses { get; set; }
     }

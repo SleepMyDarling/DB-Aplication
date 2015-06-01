@@ -60,6 +60,9 @@
                 @Html.DisplayName("Дата покупки билета")
             </th>
             <th>
+                @Html.DisplayName("Номер рейса")
+            </th>
+            <th>
                 @Html.DisplayName("Откуда")
             </th>
             <th>
@@ -78,6 +81,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.purchase_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Services.service_number)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Services.Routes.FromWhence.title)
