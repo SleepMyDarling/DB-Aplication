@@ -1,0 +1,8 @@
+﻿@model BusDBWebApplication.Models.BusSelectViewModel
+
+@Html.HiddenFor(model => model.bus_id)
+@Html.HiddenFor(model => model.brand)
+@Html.HiddenFor(model => model.number_of_seats)
+
+@Html.LabelFor(model => model.IsSelected, Model.BusInfo)
+@Html.EditorFor(model => model.IsSelected)
